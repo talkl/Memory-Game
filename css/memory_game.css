@@ -52,6 +52,9 @@ ul li img {
     width: 100%;
     height: 100%;
 }
+.no-active-image {
+    display: none;
+}
 
 /*Modal Css*/
 #modal-container {

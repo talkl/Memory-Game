@@ -39,9 +39,49 @@ guesses.*/
 
 $(document.body).ready(function () {
     // Document is loaded and DOM is ready
-    var cards = $('ul li');
-    cards.css('height', `${(parseInt($('#deck').css('height')) * 3) / cards.length }`);
 
+    var imageArray = ["theme 1/1.jpg", "theme 1/2.jpg", "theme 1/3.jpg", "theme 1/4.jpg", "theme 1/5.jpg", "theme 1/6.jpg"];
+    var backCardPath = 'theme 1/pablo_escobar_back_card.png';
+    var Memory = {};
+
+    Memory.addImagesToCards = function() {
+        for(var i=0; i < imageArray.length; i++) {
+            var newImage = $('<img />');
+            newImage.attr('src', `./media/${imageArray[i]}`);
+            newImage.addClass('no-active-image');
+            var newLi = $('<li/>');
+            var backCard = $('<img />');
+            backCard.attr('src', `./media/${backCardPath}`);
+            newLi.attr('class', `${i+1}`);
+            newLi.append(backCard);
+            newLi.append(newImage);
+            $('ul#deck').append(newLi.clone());
+            $('ul#deck').append(newLi);
+        }
+    }
+
+    Memory.shuffleListOfCards = function() {
+        var ul = document.querySelector('ul');
+        for (var i = ul.children.length; i >= 0; i--) {
+            ul.appendChild(ul.children[Math.random() * i | 0]);
+        }
+    };
+
+    Memory.adjustImagesHeight = function() {
+        var cards = $('ul li');
+        cards.css('height', `${(parseInt($('#deck').css('height')) * 3) / cards.length}`);
+    }
+
+    Memory.runGame = function() {
+        Memory.addImagesToCards();
+        Memory.adjustImagesHeight(); //calculating the height of each card in order to fit into the deck. depends on number of cards
+        Memory.shuffleListOfCards();    
+    };
     
+    Memory.runGame();
+
+
+
+
 
 });
