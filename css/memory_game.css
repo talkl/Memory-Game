@@ -1,3 +1,91 @@
 body {
     margin: 0;
+    padding: 0;
+}
+#container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/*Header Css*/
+
+#header {
+    text-align: center;
+    height: 10%;
+}
+#header > h1 {
+    margin: 0;
+}
+#header > input {
+    margin: 10px auto;
+}
+
+/*Player score css*/
+
+#player-live-score {
+    height: 5%;
+    width: 100%;
+    background-color: rgb(82, 130, 181);
+    margin: 10px auto;
+}
+
+/*Deck Css*/
+#deck {
+    display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 40px auto;
+    width: 60%;
+    height: 500px;
+}
+ul li{
+    width: 25%;
+    margin: 5px;
+    border: 1px solid black;
+}
+ul li img {
+    width: 100%;
+    height: 100%;
+}
+
+/*Modal Css*/
+#modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(128,128,128,0.7);
+    display: none;
+}
+#modal {
+    background-color:white;
+    color: tomato;
+    font-size: 60px;
+    text-align: center;
+    height: 40%;
+    width: 40%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    opacity: 1;
+}
+div#modal-container.active-modal {
+    display: block;
+}
+
+@media only screen and (max-width: 600px) {
+    #deck {
+    margin: 0;
+}
+    #modal {
+    height: 20%;
+    font-size: 12px;
+    }
 }
