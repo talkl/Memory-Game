@@ -42,7 +42,22 @@ $(document.body).ready(function () {
 
     var imageArray = ["theme 1/1.jpg", "theme 1/2.jpg", "theme 1/3.jpg", "theme 1/4.jpg", "theme 1/5.jpg", "theme 1/6.jpg"];
     var backCardPath = 'theme 1/pablo_escobar_back_card.png';
-    var Memory = {};
+    var Memory = {
+        match: function(twoCardsCollection) {
+            var cardClass = '';
+            for (var i=0; i <twoCardsCollection.length; i++) {
+                cardClass += twoCardsCollection.get(i).className;
+                cardClass += ';';
+            }
+            cardClass = cardClass.slice(0, cardClass.length - 1);
+            var cardClassArray = cardClass.split(';');
+            if (cardClassArray[0] === cardClassArray[1]) {
+                return true; //Cards class match
+            } else {
+                return false; //Cards class does not match
+            }
+        }
+    };
 
     Memory.addImagesToCards = function() {
         for(var i=0; i < imageArray.length; i++) {
@@ -72,10 +87,41 @@ $(document.body).ready(function () {
         cards.css('height', `${(parseInt($('#deck').css('height')) * 3) / cards.length}`);
     }
 
+    Memory.bindLogicToCards = function() {
+        $('ul li').on('click', function(e) {
+            $(this).addClass('clicked');
+            $(this).children().toggleClass('no-active-image');
+            var clickedCards = $('ul li.clicked');
+            if(clickedCards.length === 2) { 
+                var isMatch = Memory.match(clickedCards);
+                if (isMatch) {
+                    clickedCards.removeClass('clicked');
+                    clickedCards.addClass('matched-card');
+                    // pause for 1 sec
+                    $('#container').addClass('not-active');
+                    setTimeout(function () {
+                        $('#container').removeClass('not-active');
+                        // code for an audio output
+                    }, 1000);
+                } else {
+                    // pause for 1 sec
+                    $('#container').addClass('not-active');
+                    setTimeout(function() {
+                        $('#container').removeClass('not-active');
+                        clickedCards.removeClass('clicked');
+                        clickedCards.children().toggleClass('no-active-image');
+                    }, 1000);
+                    
+                }
+            } //end of 2 clicked cards logic
+        });
+    }
+
     Memory.runGame = function() {
         Memory.addImagesToCards();
         Memory.adjustImagesHeight(); //calculating the height of each card in order to fit into the deck. depends on number of cards
-        Memory.shuffleListOfCards();    
+        Memory.shuffleListOfCards();
+        Memory.bindLogicToCards();    
     };
     
     Memory.runGame();
