@@ -40,7 +40,7 @@ guesses.*/
 $(document.body).ready(function () {
     // Document is loaded and DOM is ready
     var Memory = {
-        themeNum: '',
+        themePathName: '',
         difficultyObj: {},
         coverImagePath: '',
         backCardPath: '',
@@ -130,7 +130,7 @@ $(document.body).ready(function () {
         },
         resetGame: function() {
             Memory.wrongGuesses = 0;
-            Memory.themeNum = '';
+            Memory.themePathName = '';
             Memory.difficultyObj = {};
             Memory.coverImagePath = '';
             Memory.backCardPath = '';
@@ -183,14 +183,19 @@ $(document.body).ready(function () {
             });
         },
         bindThemesButtons: function() {
+            $('#narcos').on('click', function() {
+                Memory.themePathName = 'narcos';
+            });
+            $('#la-casa-de-papel').on('click', function () {
+                Memory.themePathName = 'la casa de papel';
+            });
             $('.themes-buttons').on('click', function () {
                 $('#welcome-screen').hide();
                 $('#container').show();
-                Memory.themeNum = '1';
-                Memory.coverImagePath = `theme ${Memory.themeNum}/cover.jpg`;
-                Memory.backCardPath = `theme ${Memory.themeNum}/back_card.png`;
+                Memory.coverImagePath = `theme ${Memory.themePathName}/cover.jpg`;
+                Memory.backCardPath = `theme ${Memory.themePathName}/back_card.png`;
                 for(var i=0; i < Memory.difficultyObj.length; i++) {
-                    Memory.imageArray.push(`theme ${Memory.themeNum}/${Memory.difficultyObj.difficulty}/${i + 1}.jpg`);// [`theme ${Memory.themeNum}/${Memory.difficulty}/${i + 1}.jpg`, `theme ${Memory.themeNum}/${Memory.difficulty}/${i + 1}.jpg`, `theme ${Memory.themeNum}/${Memory.difficulty}/3.jpg`, `theme ${Memory.themeNum}/${Memory.difficulty}/4.jpg`, `theme ${Memory.themeNum}/${Memory.difficulty}/5.jpg`, `theme ${Memory.themeNum}/${Memory.difficulty}/6.jpg`];
+                    Memory.imageArray.push(`theme ${Memory.themePathName}/${Memory.difficultyObj.difficulty}/${i + 1}.jpg`);
                 }
                 Memory.addImagesToCards();
                 Memory.adjustImagesHeight(); //calculating the height of each card in order to fit into the deck. depends on number of cards
