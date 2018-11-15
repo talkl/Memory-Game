@@ -5,6 +5,7 @@ Want to add your own themes?
 1. add Theme folder with the same structure and type of files as the others.
   a. 6 images for easy, 9 images for medium, 12 images for hard
   b. back card image should be "png" type
+  c. audio file
 2. Edit Memory.bindThemesButtons()
   $('#button_name').on('click', function() {
     Memory.themePathName = 'folder_name';
