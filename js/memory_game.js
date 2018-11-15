@@ -56,78 +56,68 @@ $(document.body).ready(function () {
             } else {
                 return false; //Cards class does not match
             }
-        }
-    };
-
-    Memory.addImagesToCards = function() {
-        for(var i=0; i < imageArray.length; i++) {
-            var newImage = $('<img />');
-            newImage.attr('src', `./media/${imageArray[i]}`);
-            newImage.addClass('no-active-image');
-            var newLi = $('<li/>');
-            var backCard = $('<img />');
-            backCard.attr('src', `./media/${backCardPath}`);
-            newLi.attr('class', `${i+1}`);
-            newLi.append(backCard);
-            newLi.append(newImage);
-            $('ul#deck').append(newLi.clone());
-            $('ul#deck').append(newLi);
-        }
-    }
-
-    Memory.shuffleListOfCards = function() {
-        var ul = document.querySelector('ul');
-        for (var i = ul.children.length; i >= 0; i--) {
-            ul.appendChild(ul.children[Math.random() * i | 0]);
-        }
-    };
-
-    Memory.adjustImagesHeight = function() {
-        var cards = $('ul li');
-        cards.css('height', `${(parseInt($('#deck').css('height')) * 3) / cards.length}`);
-    }
-
-    Memory.bindLogicToCards = function() {
-        $('ul li').on('click', function(e) {
-            $(this).addClass('clicked');
-            $(this).children().toggleClass('no-active-image');
-            var clickedCards = $('ul li.clicked');
-            if(clickedCards.length === 2) { 
-                var isMatch = Memory.match(clickedCards);
-                if (isMatch) {
-                    clickedCards.removeClass('clicked');
-                    clickedCards.addClass('matched-card');
-                    // pause for 1 sec
-                    $('#container').addClass('not-active');
-                    setTimeout(function () {
-                        $('#container').removeClass('not-active');
-                        // code for an audio output
-                    }, 1000);
-                } else {
-                    // pause for 1 sec
-                    $('#container').addClass('not-active');
-                    setTimeout(function() {
-                        $('#container').removeClass('not-active');
+        },
+        addImagesToCards: function () {
+            for (var i = 0; i < imageArray.length; i++) {
+                var newImage = $('<img />');
+                newImage.attr('src', `./media/${imageArray[i]}`);
+                newImage.addClass('no-active-image');
+                var newLi = $('<li/>');
+                var backCard = $('<img />');
+                backCard.attr('src', `./media/${backCardPath}`);
+                newLi.attr('class', `${i + 1}`);
+                newLi.append(backCard);
+                newLi.append(newImage);
+                $('ul#deck').append(newLi.clone());
+                $('ul#deck').append(newLi);
+            }
+        },
+        adjustImagesHeight: function () {
+            var cards = $('ul li');
+            cards.css('height', `${(parseInt($('#deck').css('height')) * 3) / cards.length}`);
+        },
+        shuffleListOfCards: function () {
+            var ul = document.querySelector('ul');
+            for (var i = ul.children.length; i >= 0; i--) {
+                ul.appendChild(ul.children[Math.random() * i | 0]);
+            }
+        },
+        bindLogicToCards: function () {
+            $('ul li').on('click', function () {
+                $(this).addClass('clicked');
+                $(this).children().toggleClass('no-active-image');
+                var clickedCards = $('ul li.clicked');
+                if (clickedCards.length === 2) {
+                    var isMatch = Memory.match(clickedCards);
+                    if (isMatch) { // cards Match
                         clickedCards.removeClass('clicked');
-                        clickedCards.children().toggleClass('no-active-image');
-                    }, 1000);
-                    
-                }
-            } //end of 2 clicked cards logic
-        });
-    }
+                        clickedCards.addClass('matched-card');
+                        $('#container').addClass('not-active');
+                        // pause for 1 sec
+                        setTimeout(function () {
+                            $('#container').removeClass('not-active');
+                            // code for an audio output
+                        }, 1000);
+                    } else { // cards don't match
+                        $('#container').addClass('not-active');
+                        // pause for 1 sec
+                        setTimeout(function () {
+                            $('#container').removeClass('not-active');
+                            clickedCards.removeClass('clicked');
+                            clickedCards.children().toggleClass('no-active-image');
+                        }, 1000);
 
-    Memory.runGame = function() {
-        Memory.addImagesToCards();
-        Memory.adjustImagesHeight(); //calculating the height of each card in order to fit into the deck. depends on number of cards
-        Memory.shuffleListOfCards();
-        Memory.bindLogicToCards();    
-    };
-    
+                    }
+                } //end of 2 clicked cards logic
+            });
+        },
+        runGame: function () {
+            Memory.addImagesToCards();
+            Memory.adjustImagesHeight(); //calculating the height of each card in order to fit into the deck. depends on number of cards
+            Memory.shuffleListOfCards();
+            Memory.bindLogicToCards();
+        }
+    }; // end of Memory Object
+
     Memory.runGame();
-
-
-
-
-
 });
