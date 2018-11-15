@@ -130,7 +130,9 @@ $(document.body).ready(function () {
             $("html").css("-webkit-background-size", `cover`);
         },
         resetGame: function() {
-            Memory.audio = null;
+            Memory.audio.pause();
+            Memory.audio.removeAttribute('src'); // empty source
+            Memory.audio.load();
             Memory.wrongGuesses = 0;
             Memory.themePathName = '';
             Memory.difficultyObj = {};
@@ -194,7 +196,9 @@ $(document.body).ready(function () {
             $('.themes-buttons').on('click', function () {
                 $('#welcome-screen').hide();
                 $('#container').show();
-                Memory.audio = document.createElement('audio');
+                if(Memory.audio === null) {
+                    Memory.audio = document.createElement('audio');
+                }
                 Memory.audio.id = 'audio';
                 Memory.audio.src = `./media/theme ${Memory.themePathName}/audio.mp3`;
                 Memory.audio.type = 'audio/mpeg';
