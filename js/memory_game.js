@@ -42,7 +42,9 @@ $(document.body).ready(function () {
 
     var imageArray = ["theme 1/1.jpg", "theme 1/2.jpg", "theme 1/3.jpg", "theme 1/4.jpg", "theme 1/5.jpg", "theme 1/6.jpg"];
     var backCardPath = 'theme 1/pablo_escobar_back_card.png';
+    var coverImagePath = 'theme 1/narcos-cover.jpg';
     var Memory = {
+        wrongGuesses: 0,
         match: function(twoCardsCollection) {
             var cardClass = '';
             for (var i=0; i <twoCardsCollection.length; i++) {
@@ -92,14 +94,11 @@ $(document.body).ready(function () {
                     if (isMatch) { // cards Match
                         clickedCards.removeClass('clicked');
                         clickedCards.addClass('matched-card');
-                        $('#container').addClass('not-active');
-                        // pause for 1 sec
-                        setTimeout(function () {
-                            $('#container').removeClass('not-active');
-                            // code for an audio output
-                        }, 1000);
+                        // add audio file
+
                     } else { // cards don't match
                         $('#container').addClass('not-active');
+                        $('#player-live-score').text('wrong guesses: ' + ++Memory.wrongGuesses);
                         // pause for 1 sec
                         setTimeout(function () {
                             $('#container').removeClass('not-active');
@@ -111,11 +110,52 @@ $(document.body).ready(function () {
                 } //end of 2 clicked cards logic
             });
         },
+        bindWinCondition: function() {
+            $(document).on('click', 'ul li', function (e) {
+                var matchedCards = $('ul li.matched-card');
+                if(matchedCards.length === (imageArray.length * 2)) {
+                    //Win logic
+                    $('#player-final-score').text('wrong guesses: ' + Memory.wrongGuesses);
+                    $('div#modal-container').addClass('active-modal');
+                }
+            });
+        },
+        setBackgroundImage: function() {
+            $("html").css("background", `url('./media/${coverImagePath}') no-repeat center center fixed`);
+            $("html").css("background-size", `cover`);
+            $("html").css("-o-background-size", `cover`);
+            $("html").css("-moz-background-size", `cover`);
+            $("html").css("-webkit-background-size", `cover`);
+        },
+        resetGame: function() {
+            Memory.wrongGuesses = 0;
+            $('ul').empty();
+            $('#player-live-score').text('');
+            $('#player-final-score').text('');
+            $('#welcome-screen').show();
+            $('div#modal-container').removeClass('active-modal');
+            $('#container').hide();
+        },
+        bindTryAgainButton: function() {
+            $('#try-again-button').on('click', function() {
+                Memory.resetGame();
+            });
+        },
+        bindPlayGameButton: function() {
+            $('#play-game-button').on('click', function() {
+                $('#welcome-screen').hide();
+                $('#container').show();
+                Memory.addImagesToCards();
+                Memory.adjustImagesHeight(); //calculating the height of each card in order to fit into the deck. depends on number of cards
+                Memory.shuffleListOfCards();
+                Memory.setBackgroundImage();
+                Memory.bindWinCondition();
+                Memory.bindLogicToCards();
+            });
+        },
         runGame: function () {
-            Memory.addImagesToCards();
-            Memory.adjustImagesHeight(); //calculating the height of each card in order to fit into the deck. depends on number of cards
-            Memory.shuffleListOfCards();
-            Memory.bindLogicToCards();
+            Memory.bindTryAgainButton();
+            Memory.bindPlayGameButton();
         }
     }; // end of Memory Object
 

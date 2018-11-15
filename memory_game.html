@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     
     <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./css/memory_game.css">
     <!-- Your page title-->
     <title>Memory Game</title>
@@ -17,15 +18,27 @@
     <div id="container">
         <div id="header">
             <h1>Memory Game</h1>
-            <input type="button" value="new game"/>
         </div>
-        <div id="player-live-score">Number of wrong guesses</div>
-        <ul id="deck">
-
-        </ul>
+        <div id="player-live-score"></div>
+        <ul id="deck"></ul>
         <div id="modal-container">
-            <div id="modal">You won</div>
+            <div id="modal">
+                <span>Game Over</span>
+                <span id="player-final-score"></span>
+                <input id="try-again-button" class="play-button" type="button" value="Try Again"/>
+            </div>
         </div>
+    </div>
+    <div id="welcome-screen">
+        <div class="customize-screen" id="start">
+            <input id="play-game-button" class="play-button" type="button" value="play game">
+        </div>
+        <div class="customize-screen" id="difficulty">
+            <input class="play-button" type="button" value="easy">
+            <input class="play-button" type="button" value="medium">
+            <input class="play-button" type="button" value="hard">
+        </div>
+        <div class="customize-screen" id="theme"></div>
     </div>
 </body>
 
