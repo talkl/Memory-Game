@@ -9,5 +9,4 @@ Want to add your own themes?
   $('#button_name').on('click', function() {
     Memory.themePathName = 'folder_name';
   });
-3. edit the html #theme section:
-<!--<input id="button_name" class="play-button themes-buttons" type="button" value="theme_name"-->
+3. edit the html #theme section: <input id="button_name" class="play-button themes-buttons" type="button" value="theme_name">
