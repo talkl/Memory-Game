@@ -46,6 +46,7 @@ $(document.body).ready(function () {
         backCardPath: '',
         imageArray: [],
         wrongGuesses: 0,
+        audio: null,
         match: function(twoCardsCollection) {
             var cardClass = '';
             for (var i=0; i <twoCardsCollection.length; i++) {
@@ -129,6 +130,7 @@ $(document.body).ready(function () {
             $("html").css("-webkit-background-size", `cover`);
         },
         resetGame: function() {
+            Memory.audio = null;
             Memory.wrongGuesses = 0;
             Memory.themePathName = '';
             Memory.difficultyObj = {};
@@ -185,13 +187,21 @@ $(document.body).ready(function () {
         bindThemesButtons: function() {
             $('#narcos').on('click', function() {
                 Memory.themePathName = 'narcos';
-            });
+                });
             $('#la-casa-de-papel').on('click', function () {
                 Memory.themePathName = 'la casa de papel';
             });
             $('.themes-buttons').on('click', function () {
                 $('#welcome-screen').hide();
                 $('#container').show();
+                Memory.audio = document.createElement('audio');
+                Memory.audio.id = 'audio';
+                Memory.audio.src = `./media/theme ${Memory.themePathName}/audio.mp3`;
+                Memory.audio.type = 'audio/mpeg';
+                Memory.audio.preload = 'auto';
+                Memory.audio.loop = true;
+                Memory.audio.volume = 0.5;
+                Memory.audio.autoplay = true;
                 Memory.coverImagePath = `theme ${Memory.themePathName}/cover.jpg`;
                 Memory.backCardPath = `theme ${Memory.themePathName}/back_card.png`;
                 for(var i=0; i < Memory.difficultyObj.length; i++) {
