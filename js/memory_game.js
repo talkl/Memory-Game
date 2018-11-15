@@ -39,11 +39,12 @@ guesses.*/
 
 $(document.body).ready(function () {
     // Document is loaded and DOM is ready
-
-    var imageArray = ["theme 1/1.jpg", "theme 1/2.jpg", "theme 1/3.jpg", "theme 1/4.jpg", "theme 1/5.jpg", "theme 1/6.jpg"];
-    var backCardPath = 'theme 1/pablo_escobar_back_card.png';
-    var coverImagePath = 'theme 1/narcos-cover.jpg';
     var Memory = {
+        themeNum: '',
+        difficultyObj: {},
+        coverImagePath: '',
+        backCardPath: '',
+        imageArray: [],
         wrongGuesses: 0,
         match: function(twoCardsCollection) {
             var cardClass = '';
@@ -60,13 +61,13 @@ $(document.body).ready(function () {
             }
         },
         addImagesToCards: function () {
-            for (var i = 0; i < imageArray.length; i++) {
+            for (var i = 0; i < Memory.imageArray.length; i++) {
                 var newImage = $('<img />');
-                newImage.attr('src', `./media/${imageArray[i]}`);
+                newImage.attr('src', `./media/${Memory.imageArray[i]}`);
                 newImage.addClass('no-active-image');
                 var newLi = $('<li/>');
                 var backCard = $('<img />');
-                backCard.attr('src', `./media/${backCardPath}`);
+                backCard.attr('src', `./media/${Memory.backCardPath}`);
                 newLi.attr('class', `${i + 1}`);
                 newLi.append(backCard);
                 newLi.append(newImage);
@@ -113,7 +114,7 @@ $(document.body).ready(function () {
         bindWinCondition: function() {
             $(document).on('click', 'ul li', function (e) {
                 var matchedCards = $('ul li.matched-card');
-                if(matchedCards.length === (imageArray.length * 2)) {
+                if(matchedCards.length === (Memory.imageArray.length * 2)) {
                     //Win logic
                     $('#player-final-score').text('wrong guesses: ' + Memory.wrongGuesses);
                     $('div#modal-container').addClass('active-modal');
@@ -121,7 +122,7 @@ $(document.body).ready(function () {
             });
         },
         setBackgroundImage: function() {
-            $("html").css("background", `url('./media/${coverImagePath}') no-repeat center center fixed`);
+            $("html").css("background", `url('./media/${Memory.coverImagePath}') no-repeat center center fixed`);
             $("html").css("background-size", `cover`);
             $("html").css("-o-background-size", `cover`);
             $("html").css("-moz-background-size", `cover`);
@@ -129,9 +130,17 @@ $(document.body).ready(function () {
         },
         resetGame: function() {
             Memory.wrongGuesses = 0;
+            Memory.themeNum = '';
+            Memory.difficultyObj = {};
+            Memory.coverImagePath = '';
+            Memory.backCardPath = '';
+            Memory.imageArray = [];
             $('ul').empty();
             $('#player-live-score').text('');
             $('#player-final-score').text('');
+            $('#theme').hide();
+            $('#difficulty').hide();
+            $('#start').show();
             $('#welcome-screen').show();
             $('div#modal-container').removeClass('active-modal');
             $('#container').hide();
@@ -142,9 +151,47 @@ $(document.body).ready(function () {
             });
         },
         bindPlayGameButton: function() {
+            $('#difficulty').hide();
+            $('#theme').hide();
             $('#play-game-button').on('click', function() {
+                $('#start').hide();
+                $('#difficulty').show();
+            });
+        },
+        bindDifficultyButtons: function() {
+            $('.difficulty-buttons').on('click', function () {
+                $('#difficulty').hide();
+                $('#theme').show();
+            });
+            $('.difficulty-buttons[value="easy"]').on('click', function () {
+                Memory.difficultyObj = {
+                    difficulty: 'easy',
+                    length: 6    
+                };
+            });
+            $('.difficulty-buttons[value="medium"]').on('click', function () {
+                Memory.difficultyObj = {
+                    difficulty: 'medium',
+                    length: 9
+                };
+            });
+            $('.difficulty-buttons[value="hard"]').on('click', function () {
+                Memory.difficultyObj = {
+                    difficulty: 'hard',
+                    length: 12
+                };
+            });
+        },
+        bindThemesButtons: function() {
+            $('.themes-buttons').on('click', function () {
                 $('#welcome-screen').hide();
                 $('#container').show();
+                Memory.themeNum = '1';
+                Memory.coverImagePath = `theme ${Memory.themeNum}/cover.jpg`;
+                Memory.backCardPath = `theme ${Memory.themeNum}/back_card.png`;
+                for(var i=0; i < Memory.difficultyObj.length; i++) {
+                    Memory.imageArray.push(`theme ${Memory.themeNum}/${Memory.difficultyObj.difficulty}/${i + 1}.jpg`);// [`theme ${Memory.themeNum}/${Memory.difficulty}/${i + 1}.jpg`, `theme ${Memory.themeNum}/${Memory.difficulty}/${i + 1}.jpg`, `theme ${Memory.themeNum}/${Memory.difficulty}/3.jpg`, `theme ${Memory.themeNum}/${Memory.difficulty}/4.jpg`, `theme ${Memory.themeNum}/${Memory.difficulty}/5.jpg`, `theme ${Memory.themeNum}/${Memory.difficulty}/6.jpg`];
+                }
                 Memory.addImagesToCards();
                 Memory.adjustImagesHeight(); //calculating the height of each card in order to fit into the deck. depends on number of cards
                 Memory.shuffleListOfCards();
@@ -156,6 +203,8 @@ $(document.body).ready(function () {
         runGame: function () {
             Memory.bindTryAgainButton();
             Memory.bindPlayGameButton();
+            Memory.bindDifficultyButtons();
+            Memory.bindThemesButtons();
         }
     }; // end of Memory Object
 

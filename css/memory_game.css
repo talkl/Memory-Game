@@ -123,17 +123,12 @@ div#modal-container.active-modal {
     display: block;
     font-size: 25px;
 }
-#start {
-    display: inherit;
-    position: relative;
-}
-#difficulty {
-    display: none;
-}
-#theme {
-    display: none;
-}
+
 .customize-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
     background-color: white;
     border-radius: 5%;
     width: 60%;
@@ -143,18 +138,8 @@ div#modal-container.active-modal {
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
 }
-#play-game-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    font-size: 3em;
-}
 
 @media only screen and (max-width: 600px) {
-    #deck {
-    margin: 0;
-}
     #modal {
     height: 40%;
     font-size: 16px;
@@ -162,7 +147,10 @@ div#modal-container.active-modal {
     .customize-screen {
         height: 30%;
     }
-    #play-game-button {
+    .play-button {
+        font-size: 0.5em;
+    }
+    #start h1 {
         font-size: 0.9em;
     }
 }
