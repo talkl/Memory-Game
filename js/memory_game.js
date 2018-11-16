@@ -77,8 +77,9 @@ $(document.body).ready(function () {
             }
         },
         adjustImagesHeight: function () {
-            var cards = $('ul li');
-            cards.css('height', `${(parseInt($('#deck').css('height')) * 3) / cards.length}`);
+            // var cards = $('ul li');
+            // cards.css('height', `${(parseInt($('#deck').css('height')) * parseInt($('#deck').css('width'))) / Math.pow(cards.length,3)}`);
+            // cards.css('width', `${(parseInt($('#deck').css('height')) * parseInt($('#deck').css('width'))) / Math.pow(cards.length, 3)}`);
         },
         shuffleListOfCards: function () {
             var ul = document.querySelector('ul');
