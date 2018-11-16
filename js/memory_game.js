@@ -65,10 +65,11 @@ $(document.body).ready(function () {
             for (var i = 0; i < Memory.imageArray.length; i++) {
                 var newImage = $('<img />');
                 newImage.attr('src', `./media/${Memory.imageArray[i]}`);
-                newImage.addClass('no-active-image');
+                newImage.addClass('back-card');
                 var newLi = $('<li/>');
                 var backCard = $('<img />');
                 backCard.attr('src', `./media/${Memory.backCardPath}`);
+                backCard.addClass('front-card');
                 newLi.attr('class', `${i + 1}`);
                 newLi.append(backCard);
                 newLi.append(newImage);
@@ -85,7 +86,6 @@ $(document.body).ready(function () {
         bindLogicToCards: function () {
             $('ul li').on('click', function () {
                 $(this).addClass('clicked');
-                $(this).children().toggleClass('no-active-image');
                 var clickedCards = $('ul li.clicked');
                 if (clickedCards.length === 2) {
                     var isMatch = Memory.match(clickedCards);
@@ -101,7 +101,6 @@ $(document.body).ready(function () {
                         setTimeout(function () {
                             $('#container').removeClass('not-active');
                             clickedCards.removeClass('clicked');
-                            clickedCards.children().toggleClass('no-active-image');
                         }, 1000);
 
                     }
@@ -194,13 +193,13 @@ $(document.body).ready(function () {
                 $('#container').show();
                 if(Memory.audio === null) {
                     Memory.audio = document.createElement('audio');
+                    Memory.audio.id = 'audio';
+                    Memory.audio.type = 'audio/mpeg';
                 }
-                Memory.audio.id = 'audio';
+                Memory.audio.volume = 0.5;
                 Memory.audio.src = `./media/theme ${Memory.themePathName}/audio.mp3`;
-                Memory.audio.type = 'audio/mpeg';
                 Memory.audio.preload = 'auto';
                 Memory.audio.loop = true;
-                Memory.audio.volume = 0.5;
                 Memory.audio.autoplay = true;
                 Memory.coverImagePath = `theme ${Memory.themePathName}/cover.jpg`;
                 Memory.backCardPath = `theme ${Memory.themePathName}/back_card.png`;
