@@ -76,11 +76,6 @@ $(document.body).ready(function () {
                 $('ul#deck').append(newLi);
             }
         },
-        adjustImagesHeight: function () {
-            // var cards = $('ul li');
-            // cards.css('height', `${(parseInt($('#deck').css('height')) * parseInt($('#deck').css('width'))) / Math.pow(cards.length,3)}`);
-            // cards.css('width', `${(parseInt($('#deck').css('height')) * parseInt($('#deck').css('width'))) / Math.pow(cards.length, 3)}`);
-        },
         shuffleListOfCards: function () {
             var ul = document.querySelector('ul');
             for (var i = ul.children.length; i >= 0; i--) {
@@ -213,7 +208,6 @@ $(document.body).ready(function () {
                     Memory.imageArray.push(`theme ${Memory.themePathName}/${Memory.difficultyObj.difficulty}/${i + 1}.jpg`);
                 }
                 Memory.addImagesToCards();
-                Memory.adjustImagesHeight(); //calculating the height of each card in order to fit into the deck. depends on number of cards
                 Memory.shuffleListOfCards();
                 Memory.setBackgroundImage();
                 Memory.bindWinCondition();
