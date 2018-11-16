@@ -47,18 +47,13 @@ $(document.body).ready(function () {
         imageArray: [],
         wrongGuesses: 0,
         audio: null,
-        match: function(twoCardsCollection) {
-            var cardClass = '';
-            for (var i=0; i <twoCardsCollection.length; i++) {
-                cardClass += twoCardsCollection.get(i).className;
-                cardClass += ';';
-            }
-            cardClass = cardClass.slice(0, cardClass.length - 1);
-            var cardClassArray = cardClass.split(';');
-            if (cardClassArray[0] === cardClassArray[1]) {
-                return true; //Cards class match
+        match: function(cardsCollection) { //recursive function
+            if (cardsCollection.length === 1) {
+                return true;
+            } else if (cardsCollection.get(0).className === cardsCollection.get(1).className) {
+                return Memory.match(cardsCollection.slice(1));
             } else {
-                return false; //Cards class does not match
+                return false;
             }
         },
         addImagesToCards: function () {
