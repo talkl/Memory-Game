@@ -40,6 +40,12 @@ guesses.*/
 $(document.body).ready(function () {
     // Document is loaded and DOM is ready
     var Memory = {
+        playersRecord: [
+            {difficulty: 'easy', name: '', wrongGuesses: '9999'},
+            { difficulty: 'medium', name: '', wrongGuesses: '9999' },
+            { difficulty: 'hard', name: '', wrongGuesses: '9999' }
+        ],
+        playerName: 'some name', // code missing
         themePathName: '',
         difficultyObj: {},
         coverImagePath: '',
@@ -103,13 +109,16 @@ $(document.body).ready(function () {
             });
         },
         bindWinCondition: function() {
-            $(document).on('click', 'ul li', function (e) {
-                var matchedCards = $('ul li.matched-card');
-                if(matchedCards.length === (Memory.imageArray.length * 2)) {
-                    //Win logic
-                    $('#player-final-score').text('wrong guesses: ' + Memory.wrongGuesses);
-                    $('div#modal-container').addClass('active-modal');
-                }
+            $('ul li').on('click', function () {
+                setTimeout(function() {
+                    var matchedCards = $('ul li.matched-card');
+                    if(matchedCards.length === (Memory.imageArray.length * 2)) {
+                        //Win logic
+                        Memory.printScoreTable(Memory.difficultyObj.difficulty, Memory.playerName, Memory.wrongGuesses);
+                        $('#player-final-score').text('wrong guesses: ' + Memory.wrongGuesses);
+                        $('div#modal-container').addClass('active-modal');
+                    }
+                }, 1);
             });
         },
         setBackgroundImage: function() {
@@ -129,6 +138,7 @@ $(document.body).ready(function () {
             Memory.coverImagePath = '';
             Memory.backCardPath = '';
             Memory.imageArray = [];
+            $('#players-record').empty();
             $('ul').empty();
             $('#player-live-score').text('');
             $('#player-final-score').text('');
@@ -207,6 +217,39 @@ $(document.body).ready(function () {
                 Memory.bindWinCondition();
                 Memory.bindLogicToCards();
             });
+        },
+        printScoreTable: function(difficulyInput, nameInput, wrongGuessesInput) {
+            if(localStorage.playersRecord) {
+                Memory.playersRecord = JSON.parse(localStorage.playersRecord);
+            }
+            var table = document.getElementById('table-score');
+            var records = document.getElementById("players-record");
+            for(var i=0; i < Memory.playersRecord.length; i++) {
+                var row = records.insertRow();
+                var difficultyCell = row.insertCell(0);
+                var nameCell = row.insertCell(1);
+                var wrongGuessesCell = row.insertCell(2);
+                difficultyCell.innerHTML = Memory.playersRecord[i].difficulty;
+                nameCell.innerHTML = Memory.playersRecord[i].name;
+                wrongGuessesCell.innerHTML = Memory.playersRecord[i].wrongGuesses;
+            }
+            if(difficulyInput === 'easy' && wrongGuessesInput < Memory.playersRecord[0].wrongGuesses) {
+                table.rows[1].cells[1].innerHTML = nameInput;
+                Memory.playersRecord[0].name = nameInput;
+                table.rows[1].cells[2].innerHTML = wrongGuessesInput;
+                Memory.playersRecord[0].wrongGuesses = wrongGuessesInput.toString();
+            } else if (difficulyInput === 'medium' && wrongGuessesInput < Memory.playersRecord[1].wrongGuesses) {
+                table.rows[2].cells[1].innerHTML = nameInput;
+                Memory.playersRecord[1].name = nameInput;
+                table.rows[2].cells[2].innerHTML = wrongGuessesInput;
+                Memory.playersRecord[1].wrongGuesses = wrongGuessesInput.toString();
+            } else if (difficulyInput === 'hard' && wrongGuessesInput < Memory.playersRecord[2].wrongGuesses) {
+                table.rows[3].cells[1].innerHTML = nameInput;
+                Memory.playersRecord[2].name = nameInput;
+                table.rows[3].cells[2].innerHTML = wrongGuessesInput;
+                Memory.playersRecord[2].wrongGuesses = wrongGuessesInput.toString();
+            }
+            localStorage.playersRecord = JSON.stringify(Memory.playersRecord);
         },
         runGame: function () {
             Memory.bindTryAgainButton();

@@ -170,7 +170,7 @@ div#modal-container.active-modal {
 @media only screen and (min-width: 450px) {
     #modal {
     font-size: 1.7em;
-    height: 60%;
+    height: 68%;
     }
     ul li {
         height: 4.7rem;
