@@ -44,7 +44,11 @@
     <div id="welcome-screen">
         <div class="customize-screen" id="start">
             <h1>Memory Game</h1>
-            <input id="play-game-button" class="play-button" type="button" value="play game">
+            <form>
+                <label for="player-name">Your Name</label>
+                <input name="player-name" id="player-name" type="text" placeholder="max 20 characters"><br><br>
+                <input id="play-game-button" class="play-button" type="button" value="play game" disabled>
+            </form>
         </div>
         <div class="customize-screen" id="difficulty">
             <input class="play-button difficulty-buttons" type="button" value="easy">

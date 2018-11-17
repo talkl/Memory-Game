@@ -162,9 +162,18 @@ $(document.body).ready(function () {
         bindPlayGameButton: function() {
             $('#difficulty').hide();
             $('#theme').hide();
+            $('#player-name').on('keyup', function() {
+                var playerNameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{1,20}$/u;
+                if (playerNameRegex.test(document.getElementById("player-name").value)) {
+                    document.getElementById("play-game-button").disabled = false;
+                } else{
+                    document.getElementById("play-game-button").disabled = true;
+                }
+            });
             $('#play-game-button').on('click', function() {
                 $('#start').hide();
                 $('#difficulty').show();
+                Memory.playerName = document.getElementById("player-name").value;
             });
         },
         bindDifficultyButtons: function() {
