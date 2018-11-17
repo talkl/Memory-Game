@@ -145,6 +145,12 @@ div#modal-container.active-modal {
     transform: translateX(-50%) translateY(-50%);
 }
 
+/*Table Score css*/
+
+table#table-score {
+    font-size: 0.6em;
+}
+
 @media only screen and (min-width: 320px) {
     #modal {
     height: 50%;
@@ -171,6 +177,7 @@ div#modal-container.active-modal {
     #modal {
     font-size: 1.7em;
     height: 68%;
+    width: 70%;
     }
     ul li {
         height: 4.7rem;

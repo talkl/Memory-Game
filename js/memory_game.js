@@ -41,11 +41,11 @@ $(document.body).ready(function () {
     // Document is loaded and DOM is ready
     var Memory = {
         playersRecord: [
-            {difficulty: 'easy', name: '', wrongGuesses: '9999'},
-            { difficulty: 'medium', name: '', wrongGuesses: '9999' },
-            { difficulty: 'hard', name: '', wrongGuesses: '9999' }
+            {difficulty: 'easy', name: null, wrongGuesses: null},
+            { difficulty: 'medium', name: null, wrongGuesses: null },
+            { difficulty: 'hard', name: null, wrongGuesses: null }
         ],
-        playerName: 'some name', // code missing
+        playerName: '',
         themePathName: '',
         difficultyObj: {},
         coverImagePath: '',
@@ -132,6 +132,11 @@ $(document.body).ready(function () {
             Memory.audio.pause();
             Memory.audio.removeAttribute('src'); // empty source
             Memory.audio.load();
+            Memory.playersRecord = [
+                { difficulty: 'easy', name: null, wrongGuesses: null },
+                { difficulty: 'medium', name: null, wrongGuesses: null },
+                { difficulty: 'hard', name: null, wrongGuesses: null }
+            ];
             Memory.wrongGuesses = 0;
             Memory.themePathName = '';
             Memory.difficultyObj = {};
@@ -233,21 +238,24 @@ $(document.body).ready(function () {
                 nameCell.innerHTML = Memory.playersRecord[i].name;
                 wrongGuessesCell.innerHTML = Memory.playersRecord[i].wrongGuesses;
             }
-            if(difficulyInput === 'easy' && wrongGuessesInput < Memory.playersRecord[0].wrongGuesses) {
+            if(difficulyInput === 'easy' &&
+            (Memory.playersRecord[0].wrongGuesses === null  || wrongGuessesInput < Memory.playersRecord[0].wrongGuesses)) {
                 table.rows[1].cells[1].innerHTML = nameInput;
                 Memory.playersRecord[0].name = nameInput;
                 table.rows[1].cells[2].innerHTML = wrongGuessesInput;
-                Memory.playersRecord[0].wrongGuesses = wrongGuessesInput.toString();
-            } else if (difficulyInput === 'medium' && wrongGuessesInput < Memory.playersRecord[1].wrongGuesses) {
+                Memory.playersRecord[0].wrongGuesses = wrongGuessesInput;
+            } else if (difficulyInput === 'medium' &&
+                (Memory.playersRecord[1].wrongGuesses === null || wrongGuessesInput < Memory.playersRecord[1].wrongGuesses)) {
                 table.rows[2].cells[1].innerHTML = nameInput;
                 Memory.playersRecord[1].name = nameInput;
                 table.rows[2].cells[2].innerHTML = wrongGuessesInput;
-                Memory.playersRecord[1].wrongGuesses = wrongGuessesInput.toString();
-            } else if (difficulyInput === 'hard' && wrongGuessesInput < Memory.playersRecord[2].wrongGuesses) {
+                Memory.playersRecord[1].wrongGuesses = wrongGuessesInput;
+            } else if (difficulyInput === 'hard' &&
+                (Memory.playersRecord[2].wrongGuesses === null || wrongGuessesInput < Memory.playersRecord[2].wrongGuesses)) {
                 table.rows[3].cells[1].innerHTML = nameInput;
                 Memory.playersRecord[2].name = nameInput;
                 table.rows[3].cells[2].innerHTML = wrongGuessesInput;
-                Memory.playersRecord[2].wrongGuesses = wrongGuessesInput.toString();
+                Memory.playersRecord[2].wrongGuesses = wrongGuessesInput;
             }
             localStorage.playersRecord = JSON.stringify(Memory.playersRecord);
         },
