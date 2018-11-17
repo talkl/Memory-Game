@@ -91,7 +91,7 @@ $(document.body).ready(function () {
 
                     } else { // cards don't match
                         $('#container').addClass('not-active');
-                        $('#player-live-score').text('wrong guesses: ' + ++Memory.wrongGuesses);
+                        $('#player-live-score').text('Wrong Guesses: ' + ++Memory.wrongGuesses);
                         // pause for 1 sec
                         setTimeout(function () {
                             $('#container').removeClass('not-active');

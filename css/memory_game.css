@@ -147,11 +147,11 @@ div#modal-container.active-modal {
 
 @media only screen and (min-width: 320px) {
     #modal {
-    height: 40%;
-    font-size: 0.9em;
+    height: 50%;
+    font-size: 1.2em;
     }
     .customize-screen {
-        height: 30%;
+        height: 50%;
     }
     .play-button {
         font-size: 0.5em;
@@ -169,8 +169,8 @@ div#modal-container.active-modal {
 }
 @media only screen and (min-width: 450px) {
     #modal {
-    font-size: 1.2em;
-    height: 50%;
+    font-size: 1.7em;
+    height: 60%;
     }
     ul li {
         height: 4.7rem;
@@ -186,11 +186,12 @@ div#modal-container.active-modal {
         height: 500px;
     }
     #modal {
-    height: 60%;
+    height: 80%;
+    width: 80%;
     font-size: 2em;
     }
     .customize-screen {
-        height: 50%;
+        height: 60%;
     }
     .play-button {
         font-size: 1em;
@@ -212,24 +213,47 @@ div#modal-container.active-modal {
         height: 6rem;
         width: 6rem;
     }
+    #modal {
+        font-size: 2.5em;
+    }
+    .customize-screen {
+        height: 70%;
+    }
+}
+@media only screen and (min-width: 1024px) {
+    .play-button {
+        font-size: 1.5em;
+    }
+    #start h1 {
+        font-size: 1.5em;
+    }
+    .customize-screen {
+        height: 80%;
+    }
+    #try-again-button {
+        font-size: 1em;
+    }
 }
 @media only screen and (min-width: 1224px) {
-    #deck {
-        width: 70%;
-        height: 700px;
-    }
     ul li {
-        height: 8rem;
-        width: 8rem;
+        height: 7.5rem;
+        width: 7.5rem;
     }
+    #modal {
+        font-size: 3em;
+    }
+    
 }
 @media only screen and (min-width: 1920px) {
     #deck {
-        width: 65%;
+        width: 900px;
         height: 900px;
     }
     ul li {
         height: 15rem;
         width: 15rem;
+    }
+    #modal {
+        font-size: 3.5em;
     }
 }
