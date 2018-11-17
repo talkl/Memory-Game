@@ -163,7 +163,7 @@ $(document.body).ready(function () {
             $('#difficulty').hide();
             $('#theme').hide();
             $('#player-name').on('keyup', function() {
-                var playerNameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{1,20}$/u;
+                var playerNameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,20}$/u;
                 if (playerNameRegex.test(document.getElementById("player-name").value)) {
                     document.getElementById("play-game-button").disabled = false;
                 } else{
